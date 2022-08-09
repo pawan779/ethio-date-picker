@@ -32,8 +32,9 @@ function DatePicker() {
           onChangeDate={(date: any) => setDate(date)}
           date={!_.isEmpty(date.formatted.en) ? date.formatted.en : ""}
           isEthiopoianDate={false}
-          maxDate={"2014-10-10"}
-          minDate={"2014-09-10"}
+          maxDate={"2023-10-08"}
+          minDate={moment(Date.now()).format("YYYY-MM-DD")}
+          language="am"
         />
       )}
     </div>

@@ -19,6 +19,7 @@ interface PickerProps {
   daysStyle?: CSSProperties;
   maxDate?: string;
   minDate?: string;
+  language?: string;
 }
 
 const Picker: React.FC<PickerProps> = ({
@@ -30,6 +31,7 @@ const Picker: React.FC<PickerProps> = ({
   daysStyle = {},
   maxDate = "",
   minDate = "",
+  language = "am",
 }) => {
   const [days, setDays] = useState(intitalDay);
 
@@ -61,6 +63,15 @@ const Picker: React.FC<PickerProps> = ({
     year: "",
   });
 
+  const langChecker = (key1: any) => {
+    const lang = language;
+
+    try {
+      return key1[lang];
+    } catch (e) {
+      return "";
+    }
+  };
   const findLeapYear = (year) => {
     return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
   };
@@ -152,20 +163,24 @@ const Picker: React.FC<PickerProps> = ({
     setIsLeapYear(findLeapYear(parseInt(year) + 1));
   };
 
-  const findEthioDate = (val: any) => {
+  const getEthioDate = (val: any) => {
     const date = toEthiopianDateString(val);
     const split = date.split(" ");
-
     const findMonth = months.find((a) => a.am == split[2]);
+    return { split, findMonth };
+  };
+
+  const findEthioDate = (val: any) => {
+    const etDate = getEthioDate(val);
 
     const split1 = val.split("-");
 
-    handleChangeDate(findMonth.value, split[3]);
+    handleChangeDate(etDate.findMonth.value, etDate.split[3]);
     setSelectedDate({
       am: {
-        day: split[1],
-        month: findMonth.value,
-        year: split[3],
+        day: etDate.split[1],
+        month: etDate.findMonth.value,
+        year: etDate.split[3],
       },
       en: {
         day: split1[2],
@@ -209,19 +224,20 @@ const Picker: React.FC<PickerProps> = ({
   //handle the maximum date and minimum date
   const handleMaxMinDate = () => {
     if (!_.isEmpty(maxDate)) {
-      const split = maxDate.split("-");
+      const etDate = getEthioDate(maxDate);
+      console.log(etDate);
       setMaximumDate({
-        year: split[0],
-        month: split[1],
-        day: split[2],
+        year: etDate.split[3],
+        month: etDate.findMonth.value,
+        day: etDate.split[1],
       });
     }
     if (!_.isEmpty(minDate)) {
-      const split = minDate.split("-");
+      const etDate1 = getEthioDate(minDate);
       setMinimumDate({
-        year: split[0],
-        month: split[1],
-        day: split[2],
+        year: etDate1.split[3],
+        month: etDate1.findMonth.value,
+        day: etDate1.split[1],
       });
     }
   };
@@ -316,7 +332,7 @@ const Picker: React.FC<PickerProps> = ({
                 ) {
                   return (
                     <option key={index} value={month.value}>
-                      {month.am}
+                      {langChecker(month)}
                     </option>
                   );
                 }
@@ -328,7 +344,7 @@ const Picker: React.FC<PickerProps> = ({
                       key={index.toString()}
                       selected={month.value == currentMonth}
                     >
-                      {month.am}
+                      {langChecker(month)}
                     </option>
                   );
                 }
@@ -340,7 +356,7 @@ const Picker: React.FC<PickerProps> = ({
                       key={index.toString()}
                       selected={month.value == currentMonth}
                     >
-                      {month.am}
+                      {langChecker(month)}
                     </option>
                   );
                 }
@@ -351,7 +367,7 @@ const Picker: React.FC<PickerProps> = ({
                     key={index.toString()}
                     selected={month.value == currentMonth}
                   >
-                    {month.am}
+                    {langChecker(month)}
                   </option>
                 );
               }
@@ -400,25 +416,25 @@ const Picker: React.FC<PickerProps> = ({
             }}
             key={index.toString()}
           >
-            <h5>{week.am}</h5>
+            <h5>{langChecker(week)}</h5>
             <h5>{week.en}</h5>
           </div>
         ))}
         {days.map((day, index) =>
           currentMonth == 13 && day.value > `${isLeapYear ? 6 : 5}` ? null : (
             <>
-              <div
-                onClick={() =>
-                  day.value == ""
-                    ? console.log("empty")
-                    : handleSelectedDay(day.value)
-                }
-                className="daySty"
-                key={index.toString()}
-              >
-                {_.isNumber(day.value) && (
-                  <>
-                    {_.isNumber(handleMaxMinDays(day)) && (
+              {_.isNumber(day.value) ? (
+                <>
+                  {_.isNumber(handleMaxMinDays(day)) ? (
+                    <div
+                      onClick={() =>
+                        day.value == ""
+                          ? console.log("empty")
+                          : handleSelectedDay(day.value)
+                      }
+                      className="daySty"
+                      key={index.toString()}
+                    >
                       <div
                         className="multiDate"
                         style={{
@@ -447,10 +463,24 @@ const Picker: React.FC<PickerProps> = ({
                           {converToGeorgian(day.value)}
                         </span>
                       </div>
-                    )}
-                  </>
-                )}
-              </div>
+                    </div>
+                  ) : (
+                    <div className="daySty">
+                      <div
+                        className="multiDate"
+                        style={{ backgroundColor: "#fff", color: "#d3d3d3" }}
+                      >
+                        <span className="amDay">{day.am}</span>
+                        <span className="enDay">
+                          {converToGeorgian(day.value)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="daySty"></div>
+              )}
             </>
           )
         )}

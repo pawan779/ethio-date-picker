@@ -41,11 +41,12 @@ export const weeks = [
   { am: "ቅዳሜ", en: "Sat", or: "Sanbata xiqqaa", value: 7 },
 ];
 
+// መሰከረም	ጥቅምት	ህዳር	ታህሳስ	ጥር	የካቲት	መጋቢት	ሚያዚያ	ግንቦት	ሰኔ	ሀምሌ	ነሐሴ	ጳጉሜ
 export const months = [
   { am: "መስከረም", en: "Sept/Oct", or: "Ammajjii", value: 1 },
   { am: "ጥቅምት", en: "Oct/Nov", or: "Guraandhala", value: 2 },
-  { am: "ኅዳር", en: "Nov/Dec", or: "Bitootessa", value: 3 },
-  { am: "ታኅሣሥ", en: "Dec/Jan", or: "Ebla", value: 4 },
+  { am: "ህዳር", en: "Nov/Dec", or: "Bitootessa", value: 3 },
+  { am: "ታህሳስ", en: "Dec/Jan", or: "Ebla", value: 4 },
   { am: "ጥር", en: "Jan/Feb", or: "Caamsaa", value: 5 },
   { am: "የካቲት", en: "Feb/Mar", or: "Waxabajji", value: 6 },
   { am: "መጋቢት", en: "Mar/Apr", or: "Adoolessa", value: 7 },
@@ -55,7 +56,7 @@ export const months = [
   { am: "ሐምሌ", en: "Jul/Aug", or: "Sadaasa", value: 11 },
   { am: "ነሐሴ", en: "Aug/Sept", or: "Muddee", value: 12 },
   {
-    am: "ጳጐሜን/ጳጉሜ",
+    am: "ጳጉሜ",
     en: "Sept",
     or: "Qaaqumee",
     value: 13,
