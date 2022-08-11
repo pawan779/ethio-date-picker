@@ -12,11 +12,11 @@
 
 ## Props
 
-    1. onChangeDate =>>>>> returns formatted: { am: "", en: "" }, date: { am: { }, en: { } },
-    2. date =>>> YYYY - MM - DD
-    3. minDate (optional) =>>> YYYY - MM - DD
-    4. maxDate (optional) =>>> YYYY - MM - DD
-    5. language (optional) default "am" =>>> am, en
-    6. isEthiopoianDate (optional) default false =>>> if true date props (#2) should be enter in ethiopian date format
+    onChangeDate =>>>>> returns {formatted: { am: "", en: "" }, date: { am: { }, en: { } }}
+    date =>>> YYYY - MM - DD
+    minDate (optional) =>>> YYYY - MM - DD
+    maxDate (optional) =>>> YYYY - MM - DD
+    language (optional) default "am" =>>> am, or
+     isEthiopoianDate (optional) default false =>>> if true date props (#2) should be enter in ethiopian date format
 
 
