@@ -19,7 +19,7 @@ interface PickerProps {
   daysStyle?: CSSProperties;
   maxDate?: string;
   minDate?: string;
-  language?: string;
+  language?: "am" | "or";
 }
 
 const Picker: React.FC<PickerProps> = ({
@@ -413,15 +413,26 @@ const Picker: React.FC<PickerProps> = ({
           <div
             style={{
               width: "14.28%",
+              textAlign: "center",
             }}
             key={index.toString()}
+            className="weekSty"
           >
             <h5>{langChecker(week)}</h5>
-            <h5>{week.en}</h5>
+            <h5 style={{ marginTop: "-10px", marginBottom: "20px" }}>
+              {week.en}
+            </h5>
           </div>
         ))}
         {days.map((day, index) =>
-          currentMonth == 13 && day.value > `${isLeapYear ? 6 : 5}` ? null : (
+          currentMonth == 13 && day.value > `${isLeapYear ? 6 : 5}` ? (
+            <div className="daySty">
+              <div className="multiDate1">
+                <span className="amDay"></span>
+                <span className="enDay"></span>
+              </div>
+            </div>
+          ) : (
             <>
               {_.isNumber(day.value) ? (
                 <>
@@ -458,7 +469,7 @@ const Picker: React.FC<PickerProps> = ({
                           ...daysStyle,
                         }}
                       >
-                        <span className="amDay">{day.am}</span>
+                        <span className="amDay">{langChecker(day)}</span>
                         <span className="enDay">
                           {converToGeorgian(day.value)}
                         </span>
@@ -470,7 +481,7 @@ const Picker: React.FC<PickerProps> = ({
                         className="multiDate"
                         style={{ backgroundColor: "#fff", color: "#d3d3d3" }}
                       >
-                        <span className="amDay">{day.am}</span>
+                        <span className="amDay">{langChecker(day)}</span>
                         <span className="enDay">
                           {converToGeorgian(day.value)}
                         </span>
@@ -479,7 +490,12 @@ const Picker: React.FC<PickerProps> = ({
                   )}
                 </>
               ) : (
-                <div className="daySty"></div>
+                <div className="daySty">
+                  <div className="multiDate1">
+                    <span className="amDay"></span>
+                    <span className="enDay"></span>
+                  </div>
+                </div>
               )}
             </>
           )
